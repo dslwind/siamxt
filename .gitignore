@@ -7,3 +7,4 @@ morph_tree_alpha_aux.py
 *.DS_Store
 SWIG/*
 SWIG
+*.pgm

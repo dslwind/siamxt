@@ -6,23 +6,32 @@
 
 # Module morph_tree_alpha
 
-from .build_max_tree import build_max_tree
-from .morph_tree_alpha_methods import getImage, clone, recConnectedComponent, compact,\
-				     areaOpen, bbox, computeRR, \
-                                     getChildren, getAncestors, \
-                                     getDescendants, getSubBranches, prune, contractDR, computeHistogram,\
-                                     getBifAncestor, computeNodeGrayAvg, computeNodeGrayVar, \
-                                     computeEccentricity, computeNodeCentroid
-    
-                                     
-
-from .morph_tree_alpha_aux import get_children_aux_c, get_ancestors_aux_c, get_descendants_aux_c, \
-     get_sub_branches_aux_c,prune_aux_c, contract_dr_aux_c, update_nchild_aux_c, remove_node_array_lines_c,\
-     rec_connected_component_2d_c, rec_connected_component_3d_c, get_image_aux_2d_c, get_image_aux_3d_c, \
-     lut_node_index_3d_c, lut_node_index_2d_c ,get_bif_ancestor_aux_c, compute_node_gray_avg_aux_c, \
-     compute_node_gray_var_aux_c, compute_eccentricity_aux_c, compute_hist_aux_c
-
 from ._aux import se2off
+from .build_max_tree import build_max_tree
+from .morph_tree_alpha_aux import (compute_eccentricity_aux_c,
+                                   compute_hist_aux_c,
+                                   compute_node_gray_avg_aux_c,
+                                   compute_node_gray_var_aux_c,
+                                   contract_dr_aux_c, get_ancestors_aux_c,
+                                   get_bif_ancestor_aux_c, get_children_aux_c,
+                                   get_descendants_aux_c, get_image_aux_2d_c,
+                                   get_image_aux_3d_c, get_sub_branches_aux_c,
+                                   lut_node_index_2d_c, lut_node_index_3d_c,
+                                   prune_aux_c, rec_connected_component_2d_c,
+                                   rec_connected_component_3d_c,
+                                   remove_node_array_lines_c,
+                                   update_nchild_aux_c)
+from .morph_tree_alpha_methods import (areaOpen, bbox, clone, compact,
+                                       computeEccentricity, computeHistogram,
+                                       computeNodeCentroid, computeNodeGrayAvg,
+                                       computeNodeGrayVar, computeRR,
+                                       contractDR, generateCCGraph,
+                                       generateCCPathGraph, generateGraph,
+                                       getAncestors, getBifAncestor,
+                                       getChildren, getDescendants, getImage,
+                                       getSubBranches, prune,
+                                       recConnectedComponent)
+
 
 class MorphTreeAlpha:
     """
@@ -53,18 +62,20 @@ class MorphTreeAlpha:
     contractDR = contractDR
     computeHistogram = computeHistogram
     computeNodeCentroid = computeNodeCentroid
+    generateGraph = generateGraph
+    generateCCPathGraph = generateCCPathGraph
+    generateCCGraph = generateCCGraph
     
     # New 01/27/2016
     getBifAncestor = getBifAncestor
     computeNodeGrayAvg = computeNodeGrayAvg
     computeNodeGrayVar = computeNodeGrayVar
     computeEccentricity = computeEccentricity
-    
 
-
-    def __init__(self,img = None, Bc = None,option = 'max_tree'):
+    def __init__(self, img=None, Bc=None, option='max_tree'):
         if option == 'max_tree':
-            _,_,self.node_array,self.node_index, = build_max_tree(img,Bc, option = 1)
+            _, _, self.node_array, self.node_index, = build_max_tree(
+                img, Bc, option=1)
         elif option == 'tree_of_shapes':
             print("Error: Option not implemented yet")
         else:
@@ -101,4 +112,3 @@ class MorphTreeAlpha:
         self.compute_node_gray_var_aux = compute_node_gray_var_aux_c
         self.compute_eccentricity_aux = compute_eccentricity_aux_c
         self.compute_hist_aux = compute_hist_aux_c
-
