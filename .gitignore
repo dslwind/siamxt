@@ -9,3 +9,4 @@ SWIG/*
 SWIG
 *.pgm
 *.json
+*checkpoint.ipynb
